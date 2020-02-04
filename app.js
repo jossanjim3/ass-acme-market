@@ -1,4 +1,4 @@
-varexpress = require('express'),
+var express = require('express'),
 app = express(),
 port = process.env.PORT || 8080,
 mongoose = require('mongoose'),
@@ -8,10 +8,10 @@ Actor = require('./api/models/actorModel'),
 bodyParser = require('body-parser');
  
 // MongoDB URI building
-varmongoDBHostname = process.env.mongoDBHostname || "localhost";
-varmongoDBPort = process.env.mongoDBPort || "27017";
-varmongoDBName = process.env.mongoDBName || "ACME-Market";
-varmongoDBURI = "mongodb://" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
+var mongoDBHostname = process.env.mongoDBHostname || "localhost";
+var mongoDBPort = process.env.mongoDBPort || "27017";
+var mongoDBName = process.env.mongoDBName || "ACME-Market";
+var mongoDBURI = "mongodb://" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
  
 mongoose.connect(mongoDBURI, {
 reconnectTries:10,
@@ -26,7 +26,7 @@ useNewUrlParser:true
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
  
-varroutesActors = require('./api/routes/actorRoutes');
+var routesActors = require('./api/routes/actorRoutes');
 //varroutesItems = require('./api/routes/itemRoutes'); 
 //varroutesOrders = require('./api/routes/orderRoutes');
  
