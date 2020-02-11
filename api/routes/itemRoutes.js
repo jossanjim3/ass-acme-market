@@ -18,6 +18,19 @@ module.exports = function(app) {
     .post(items.create_an_item);
 
   /**
+   * get results from a search of items groupBy category
+   *    RequiredRoles: None
+   * 
+   * @section items
+	 * @type get
+	 * @url /v1/items/search
+   * @param {string} sortedBy (category)
+   * @param {string} keyword //in sku, name, or description
+   */
+  app.route('/v1/items/search')
+  .get(items.search_items)
+
+  /**
    * Put comments on an item or update it
    *    RequiredRoles: any (comment); administrator if any other update
    * Delete an item
@@ -34,19 +47,6 @@ module.exports = function(app) {
 	  .put(items.update_an_item)
     .delete(items.delete_an_item);
   
-  /**
-   * get results from a search of items groupBy category
-   *    RequiredRoles: None
-   * 
-   * @section items
-	 * @type get
-	 * @url /v1/items/search
-   * @param {string} sortedBy (category)
-   * @param {string} keyword //in sku, name, or description
-   */
-  app.route('/v1/items/search')
-		.get(items.search_items)
-
   app.route('/v0/categories')
     .get(items.list_all_categories)
     .post(items.create_a_category);
