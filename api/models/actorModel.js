@@ -29,7 +29,8 @@ var ActorSchema = new Schema({
     required: 'Kindly enter the phone number'
   },
   address:{
-    type: String
+    type: String,
+    required: 'Kindly enter the address'
   },
   photo: {
     data: Buffer, contentType: String
