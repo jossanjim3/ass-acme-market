@@ -36,11 +36,55 @@ exports.create_an_item = function(req, res) {
 };
 
 exports.search_items = function(req, res) {
-  //Check if category param exists (category: req.query.category)
-  //Check if keyword param exists (keyword: req.query.keyword)
-  //Search depending on params but only if deleted = false
-  console.log('Searching an item depending on params');
-  res.send('Item returned from the item search');
+  //In further version of the code we will:
+  //1.- control the authorization in order to include deleted items in the results if the requester is an Administrator.
+  //2.- use indexes to search keywords in 'name', 'description' or 'sku'.
+  var query = {};
+  //Checking if itemName is null or not. If null, all items are returned.
+  query.name = req.query.itemName!=null ? req.query.itemName : /.*/;
+
+  if(req.query.categoryId){
+    query.category=req.query.categoryId;
+  }
+  
+  if(req.query.deleted){
+    query.deleted = req.query.deleted;
+  }
+
+  var skip=0;
+  if(req.query.startFrom){
+    skip = parseInt(req.query.startFrom);
+  }
+  var limit=0;
+  if(req.query.pageSize){
+    limit=parseInt(req.query.pageSize);
+  }
+
+  var sort="";
+  if(req.query.reverse=="true"){
+    sort="-";
+  }
+  if(req.query.sortedBy){
+    sort+=req.query.sortedBy;
+  }
+
+  console.log("Query: "+query+" Skip:" + skip+" Limit:" + limit+" Sort:" + sort);
+
+  Item.find(query)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .lean()
+      .exec(function(err, item){
+    console.log('Start searching items');
+    if (err){
+      res.send(err);
+    }
+    else{
+      res.json(item);
+    }
+    console.log('End searching items');
+  });
 };
 
 

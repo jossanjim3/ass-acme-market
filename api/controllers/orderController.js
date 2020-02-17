@@ -27,12 +27,64 @@ exports.list_my_orders = function(req, res) {
 };
 
 exports.search_orders = function(req, res) {
-  //check if clerkId param exists
-  //check if assigned param exists
-  //check if delivered param exists
-  //Search depending on params
-  console.log('Searching orders depending on params');
-  res.send('Orders returned from the orders search');
+  var query = {};
+  //if clerkId is null, i.e. parameter is not in the URL, the search retrieves orders not assined to any clerk
+  //else, the search retrieves orders assined to the specified clerk
+  query.clerk = req.query.clerkId;
+
+  if (req.query.cancelled=="true") {
+      //retrieving orders with a cancelationMoment
+      query.cancelationMoment = { $exists: true }
+  }
+  if (req.query.cancelled=="false") {
+      //retrieving orders without a cancelationMoment
+      query.cancelationMoment = { $exists: false };
+  }
+
+  if (req.query.delivered=="true") {
+      //retrieving orders with a deliveryMoment
+      query.deliveryMoment = { $exists: true }
+  }
+  if (req.query.delivered=="false") {
+      //retrieving orders without a deliveryMoment
+      query.deliveryMoment = { $exists: false };
+  }
+
+  var skip=0;
+  if(req.query.startFrom){
+    skip = parseInt(req.query.startFrom);
+  }
+  var limit=0;
+  if(req.query.pageSize){
+    limit=parseInt(req.query.pageSize);
+  }
+
+  var sort="";
+  if(req.query.reverse=="true"){
+    sort="-";
+  }
+  if(req.query.sortedBy){
+    sort+=req.query.sortedBy;
+  }
+
+  console.log("Query: "+query+" Skip:" + skip+" Limit:" + limit+" Sort:" + sort);
+
+  Order.find(query)
+       .sort(sort)
+       .skip(skip)
+       .limit(limit)
+       .lean()
+       .exec(function(err, order){
+    console.log('Start searching orders');
+    if (err){
+      res.send(err);
+    }
+    else{
+      res.json(order);
+    }
+    console.log('End searching orders');
+  });
+
 };
 
 

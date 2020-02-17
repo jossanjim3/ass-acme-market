@@ -23,9 +23,13 @@ module.exports = function(app) {
    * @section orders
    * @type get
    * @url /v1/orders/search
-   * @param {string} clerkId
-   * @param {string} asigned (true|false)
+   * @param {string} clerkId //if it is null we will include the non assigned orders
    * @param {string} delivered (true|false)
+   * @param {string} cancelled (true|false)
+   * @param {string} sortedBy (total)
+   * @param {string} reverse (true|false)
+   * @param {string} startFrom
+   * @param {string} pageSize
   */
   app.route('/v1/orders/search')
     .get(order.search_orders);

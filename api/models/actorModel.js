@@ -16,8 +16,8 @@ var ActorSchema = new Schema({
   email: {
     type: String,
     required: 'Kindly enter the actor email',
-    unique: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']    
+    //unique: true,
+    //match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']    
   },
   password: {
     type: String,
@@ -34,7 +34,7 @@ var ActorSchema = new Schema({
   },
   address:{
     type: String,
-    required: 'Kindly enter the address'
+    //required: 'Kindly enter the address'
   },
   photo: {
     data: Buffer, contentType: String

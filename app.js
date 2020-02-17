@@ -5,14 +5,19 @@ var express = require('express'),
   Actor = require('./api/models/actorModel'),
   Item = require('./api/models/itemModel'),
   Order = require('./api/models/orderModel'),
+  Test = require('./api/models/testModel'),
   bodyParser = require('body-parser');
 
 // MongoDB URI building
+var mongoDBUser = process.env.mongoDBUser || "myUser";
+var mongoDBPass = process.env.mongoDBPass || "myUserPassword";
+var mongoDBCredentials = (mongoDBUser && mongoDBPass) ? mongoDBUser + ":" + mongoDBPass + "@" : "";
+
 var mongoDBHostname = process.env.mongoDBHostname || "localhost";
 var mongoDBPort = process.env.mongoDBPort || "27017";
 var mongoDBName = process.env.mongoDBName || "ACME-Market";
-var mongoDBURI = "mongodb://" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
 
+var mongoDBURI = "mongodb://" + mongoDBCredentials + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
 
 mongoose.connect(mongoDBURI, {
     reconnectTries: 10,
@@ -30,11 +35,13 @@ app.use(bodyParser.json());
 var routesActors = require('./api/routes/actorRoutes');
 var routesItems = require('./api/routes/itemRoutes'); 
 var routesOrders = require('./api/routes/orderRoutes');
+var routesStorage = require('./api/routes/storageRoutes');
 
 
 routesActors(app);
 routesItems(app);
 routesOrders(app);
+routesStorage(app);
 
 
 console.log("Connecting DB to: " + mongoDBURI);

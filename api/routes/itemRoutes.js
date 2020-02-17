@@ -18,13 +18,19 @@ module.exports = function(app) {
     .post(items.create_an_item);
 
   /**
-   * get results from a search of items groupBy category
-   *    RequiredRoles: None
+   * get results from a search engine
+   *    RequiredRoles: None; Administrator can view "deleted" items
    * 
    * @section items
 	 * @type get
 	 * @url /v1/items/search
+   * @param {string} itemName
+   * @param {string} categoryId (categoryId)
+   * @param {string} deleted (true|false)
+   * @param {string} startFrom
+   * @param {string} pageSize
    * @param {string} sortedBy (category)
+   * @param {string} reverse (true|false) 
    * @param {string} keyword //in sku, name, or description
    */
   app.route('/v1/items/search')
