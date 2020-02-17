@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/alejandrofdez-us/ACME-Market#readme",
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^3.0.8",
     "dateformat": "^3.0.3",
     "express": "^4.16.4",
     "mongoose": "^5.8.7",
