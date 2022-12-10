@@ -19,7 +19,7 @@
   "dependencies": {
     "bcrypt": "^3.0.8",
     "dateformat": "^3.0.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "mongoose": "^5.8.7",
     "nanoid": "^2.0.1"
   }
